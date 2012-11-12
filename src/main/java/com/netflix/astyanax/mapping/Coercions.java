@@ -15,11 +15,15 @@
  ******************************************************************************/
 package com.netflix.astyanax.mapping;
 
-import com.netflix.astyanax.ColumnListMutation;
-import com.netflix.astyanax.model.Column;
-
 import java.lang.reflect.Field;
 import java.util.Date;
+import java.util.Locale;
+import java.util.UUID;
+
+import org.apache.commons.lang.LocaleUtils;
+
+import com.netflix.astyanax.ColumnListMutation;
+import com.netflix.astyanax.model.Column;
 
 class Coercions {
     @SuppressWarnings("unchecked")
@@ -54,6 +58,10 @@ class Coercions {
             objValue = column.getByteArrayValue();
         } else if (field.getType().isEnum()) {
             objValue = Enum.valueOf((Class<? extends Enum>)field.getType(), column.getStringValue());
+        } else if (field.getType() == UUID.class) {
+            objValue = column.getUUIDValue();
+        } else if (field.getType() == Locale.class) {
+            objValue = LocaleUtils.toLocale(column.getStringValue());
         } else {
             throw new UnsupportedOperationException();
         }
@@ -101,6 +109,10 @@ class Coercions {
                     mutation.putColumn(columnName, (byte[]) objValue, null);
                 } else if (objValue.getClass().isEnum()) {
                     mutation.putColumn(columnName, objValue.toString(), null);
+                } else if (objValue.getClass() == UUID.class) {
+                    mutation.putColumn(columnName, (UUID) objValue, null);
+                } else if (objValue.getClass() == Locale.class) {
+                    mutation.putColumn(columnName, objValue.toString());
                 } else {
                     throw new UnsupportedOperationException();
                 }
