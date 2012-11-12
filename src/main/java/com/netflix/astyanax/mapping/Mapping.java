@@ -15,6 +15,13 @@
  ******************************************************************************/
 package com.netflix.astyanax.mapping;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
@@ -23,13 +30,6 @@ import com.netflix.astyanax.ColumnListMutation;
 import com.netflix.astyanax.model.ColumnList;
 import com.netflix.astyanax.model.Row;
 import com.netflix.astyanax.model.Rows;
-
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * <p>
@@ -312,7 +312,7 @@ public class Mapping<T> {
             mappingName = annotationSet.getColumnName(field, columnAnnotation);
         }
 
-        if (mappingName != null) {
+        if (mappingName != null && !isKey.get()) {
             Preconditions.checkArgument(
                     !usedNames.contains(mappingName.toLowerCase()), mappingName
                             + " has already been used for this column family");
