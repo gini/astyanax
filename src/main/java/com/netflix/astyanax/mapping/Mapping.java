@@ -312,7 +312,7 @@ public class Mapping<T> {
             mappingName = annotationSet.getColumnName(field, columnAnnotation);
         }
 
-        if (mappingName != null && !isKey.get()) {
+        if (mappingName != null && (idAnnotation == null || annotationSet.isMapped(field, idAnnotation))) {
             Preconditions.checkArgument(
                     !usedNames.contains(mappingName.toLowerCase()), mappingName
                             + " has already been used for this column family");

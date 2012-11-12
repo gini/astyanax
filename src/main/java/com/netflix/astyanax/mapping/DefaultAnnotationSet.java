@@ -42,4 +42,9 @@ public class DefaultAnnotationSet implements AnnotationSet<Id, Column> {
         String name = annotation.value();
         return (name.length() > 0) ? name : field.getName();
     }
+
+    @Override
+    public boolean isMapped(Field field, Id annotation) {
+        return annotation.mapped();
+    }
 }

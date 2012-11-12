@@ -15,7 +15,11 @@
  ******************************************************************************/
 package com.netflix.astyanax.mapping;
 
-import java.lang.annotation.*;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 @Documented
 @Target({ ElementType.FIELD })
@@ -32,4 +36,12 @@ public @interface Id {
      * @return column name
      */
     String value() default "";
+
+    /**
+     * Specifies whether to persist the ID as column value in addition.
+     * This is true by default.
+     * 
+     * @return
+     */
+    boolean mapped() default true;
 }

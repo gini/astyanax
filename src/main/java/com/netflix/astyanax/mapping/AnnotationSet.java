@@ -30,6 +30,17 @@ public interface AnnotationSet<ID extends Annotation, COLUMN extends Annotation>
     public String getIdName(Field field, ID annotation);
 
     /**
+     * Return whether to map the ID as column in addition to row key
+     * 
+     * @param field
+     *            the field from the bean
+     * @param annotation
+     *            the id annotation
+     * @return <code>true</code> if ID shall be mapped
+     */
+    public boolean isMapped(Field field, ID annotation);
+
+    /**
      * Return the column name to use for the given field. NOTE: if the field
      * should not be persisted, return <code>null</code>.
      * 
