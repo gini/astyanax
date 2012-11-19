@@ -30,7 +30,7 @@ gradle.taskGraph.whenReady {
     if (isNotMaven) {
         def artifacts = project.configurations.sources.artifacts
         def sourceArtifact = artifacts.iterator().next()
-        sourceArtifact.type = 'sources'
+        //sourceArtifact.type = 'sources'
     }
 }
 
